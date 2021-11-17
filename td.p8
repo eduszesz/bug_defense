@@ -3,7 +3,9 @@ version 33
 __lua__
 --bug defense
 --by eduszesz
--- game off game jam 2021
+--game off game jam 2021
+--pocketchip
+
 
 function _init()
 	t=0
