@@ -4,7 +4,7 @@ __lua__
 --bug defense
 --by eduszesz
 --game off game jam 2021
---pocketchip
+--pocketchip test 2
 
 
 function _init()
