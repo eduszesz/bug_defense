@@ -120,7 +120,7 @@ function _draw()
  
  for l in all(lasers) do
   rectfill(l.x,l.y,l.x+l.fx,l.y+l.fy,8+l.t%3)
-  rect(l.x+l.box.x1,l.y+l.box.y1,l.x+l.box.x2,l.y+l.box.y2,11)
+  --rect(l.x+l.box.x1,l.y+l.box.y1,l.x+l.box.x2,l.y+l.box.y2,11)
  end
 	
 end
@@ -312,10 +312,10 @@ function fire_laser()
  for tw in all(towers) do
 	 	local drcx,drcy,lbox=1,1,{x1=0,y1=-32,x2=2,y2=0}
 			if t%8==0 and tw.isp==10 then
-				if tw.sp==tw.isp then drcx,drcy,lbox=0,-1,{x1=-1,y1=-32,x2=2,y2=0} end			
-				if tw.sp==(tw.isp+1) then drcx,drcy,lbox=1,0,{x1=0,y1=-1,x2=32,y2=2} end			
-				if tw.sp==(tw.isp+2) then drcx,drcy,lbox=0,1,{x1=-1,y1=0,x2=2,y2=32} end			
-				if tw.sp==(tw.isp+3) then drcx,drcy,lbox=-1,0,{x1=-32,y1=-1,x2=0,y2=2} end
+				if tw.sp==tw.isp then drcx,drcy,lbox=0,-1,{x1=-1,y1=-30,x2=2,y2=0} end			
+				if tw.sp==(tw.isp+1) then drcx,drcy,lbox=1,0,{x1=0,y1=-1,x2=30,y2=2} end			
+				if tw.sp==(tw.isp+2) then drcx,drcy,lbox=0,1,{x1=-1,y1=0,x2=2,y2=30} end			
+				if tw.sp==(tw.isp+3) then drcx,drcy,lbox=-1,0,{x1=-30,y1=-1,x2=0,y2=2} end
 	 
 	 		local lx=tw.x+4+(drcx*4)
 	 		local ly=tw.y+4+(drcy*4)
