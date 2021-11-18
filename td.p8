@@ -59,6 +59,7 @@ function _update()
 	col_bullets()
 	col_lasers()
 	set_explosions()
+	set_trap()
 	
 	for e in all(enemies) do
 		immortal(e,90)
@@ -274,6 +275,14 @@ function move_enemies()
 	end
 end
 
+
+function distance(x1,y1,x2,y2)
+	local dx=(x2-x1)
+	local dy=(y2-y1)
+	if abs(dx)>160 then dx=160 end
+	return sqrt(dx*dx+dy*dy)
+end
+
 function abs_box(s)
  local box = {}
  box.x1 = s.box.x1 + s.x
@@ -359,11 +368,19 @@ function set_lasers()
  end
 end
 
-function distance(x1,y1,x2,y2)
-	local dx=(x2-x1)
-	local dy=(y2-y1)
-	if abs(dx)>160 then dx=160 end
-	return sqrt(dx*dx+dy*dy)
+function set_trap()
+	for tw in all(towers) do
+		if tw.isp==14 then
+			for e in all(enemies) do
+				if distance(tw.x,tw.y,e.x,e.y)<10 then
+					explode(tw.x,tw.y)
+					del(towers,tw)
+					del(enemies,e)
+					explode(e.x,e.y)
+				end
+			end
+		end
+	end
 end
 __gfx__
 00000000770000778800008800000000000000008000000000000000000000000000000080000000000000000000000000000000000000000000000000000000
