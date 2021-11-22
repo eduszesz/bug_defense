@@ -80,9 +80,9 @@ function _update()
 	slow_enemies()
 	exit_enemies()
 	for e in all(enemies) do
-		immortal(e,90)
+		immortal(e,45)
 	end
-	if t%90==0 then
+	if t%150==0 then
 		check_win()	
 	end
 	move_enemies()
@@ -314,11 +314,11 @@ function set_enemies()
 								sp=3,
 								h=5,
 								t=0,
-								s=30,
+								s=90,
 								imm=false,
 								box={x1=0,y1=0,x2=7,y2=7},}
 			
-	if	set_e and t%60==0 then						
+	if	set_e and t%150==0 then						
 		add(enemies,e)							
 	end		
 
@@ -401,28 +401,8 @@ function fire_laser()
  for tw in all(towers) do
 	 	local drcx,drcy,lbox=1,1,{x1=0,y1=-32,x2=2,y2=0}
 			if tw.isp==10 and t%60<4 then
-			--[[	if tw.c==1 then drcx,drcy,lbox=0,-1,{x1=-1,y1=-30,x2=2,y2=0} end			
-				if tw.c==2 then drcx,drcy,lbox=1,0,{x1=0,y1=-1,x2=30,y2=2} end			
-				if tw.c==3 then drcx,drcy,lbox=0,1,{x1=-1,y1=0,x2=2,y2=30} end			
-				if tw.c==4 then drcx,drcy,lbox=-1,0,{x1=-30,y1=-1,x2=0,y2=2} end
-	 
-	 		local lx=tw.x+4+(drcx*4)
-	 		local ly=tw.y+4+(drcy*4)
-	 		local lfx=drcx*32
-	 		local lfy=drcy*32
-	 		local l={
-	 							x=lx,
-	 							y=ly,
-	 							fx=lfx,
-	 							fy=lfy,
-	 							t=0,
-	 							box=lbox,
-	 							}]]
-	 		for e in all(enemies) do
-	 			local dx,dy=-4,-4
-	 			if tw.y>e.y then dy=4 end
-	 			if tw.x>e.x then dx=4 end
-					local vx,vy=e.x+rnd(4)+dx,e.y+rnd(4)+dy
+	 		if #enemies>0 then	
+					local vx,vy=enemies[1].x+4,enemies[1].y+4
 					local l={
 											x=vx,
 											y=vy,
@@ -431,10 +411,11 @@ function fire_laser()
 											fx=vx,
 											fy=vy,
 											t=0,
-											box = {x1=0,y1=0,x2=7,y2=7},
-											}						
+											box = {x1=0,y1=0,x2=1,y2=1},
+											}
+																
 		 		add(lasers,l)
-	 		end
+	 	end
 	 end
 	end 
 end
@@ -482,9 +463,9 @@ function slow_enemies()
 	if #enemies>0 then	
 		for e in all(enemies) do
 			if mget(e.x/8,e.y/8)==27 then
-				e.s=60
+				e.s=120
 			else	
-				e.s=30
+				e.s=90
 			end
 		end
 	end	
