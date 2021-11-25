@@ -20,14 +20,16 @@ function _init()
 	s_c=1--stage counter
 	stagex={0,128,256,384,512,640,768,896,0,128,256,384,512,640,768,896}
 	stagey={0,0,0,0,0,0,0,0,128,128,128,128,128,128,128,128}
-	
+	wave_t=0 --time between waves
+	wave=0
+	s_alert=false	
 	c={
 		x=stagex[s_c],
 		y=stagey[s_c],
 		sp=2}
 			
 	find_path()
-	set_e=true	
+	set_e=false	
 	lose=false
 	win=false
 	reset_map()		
@@ -36,6 +38,7 @@ end
 function _update()
 	t+=1
 	
+	set_waves()
 	set_enemies()
 	
 	if btnp(0) then c.x-=8 end
@@ -174,6 +177,7 @@ function _draw()
 		--print("you lose",stagex[s_c]*4,stagex[s_c]*4,8)
 		pal(1,8)
 	end
+	wave_alert()
 end
 
 function find_path()
@@ -315,7 +319,7 @@ function set_enemies()
 								sp=3,
 								h=5,
 								t=0,
-								s=90,
+								s=120,
 								imm=false,
 								box={x1=0,y1=0,x2=7,y2=7},}
 			
@@ -339,6 +343,11 @@ function move_enemies()
 			e.y+=e.dy*8
 		end	
 	end
+end
+
+function rectfill2(_x,_y,_w,_h,_c)
+ --★
+ rectfill(_x,_y,_x+max(_w-1,0),_y+max(_h-1,0),_c)
 end
 
 
@@ -464,9 +473,9 @@ function slow_enemies()
 	if #enemies>0 then	
 		for e in all(enemies) do
 			if mget(e.x/8,e.y/8)==27 then
-				e.s=120
+				e.s=150
 			else	
-				e.s=90
+				e.s=120
 			end
 		end
 	end	
@@ -482,7 +491,8 @@ end
 
 function check_win()
 	local sc=s_c
-	if not win and #enemies==0 then
+	if not win and #enemies==0 
+		and wave==3 then
 		win=true
 		_init()
 		s_c=(1+sc)
@@ -491,6 +501,7 @@ function check_win()
 end
 
 function reset_map()
+	t=0
 	for x=0,128 do
 		for y=0,128 do
 			if mget(x,y)==27 then
@@ -498,9 +509,31 @@ function reset_map()
 			end
 		end
 	end
+	wave=0
 end
 
+function set_waves()
+	if t%30==0 and (not set_e) 
+		and #enemies==0 then
+		wave_t+=1
+	end
+	
+	if wave_t==40 then
+		wave_t=0
+		set_e=true
+		wave+=1
+	end
+end
 
+function wave_alert()
+	local co=flr(rnd(8))+1
+	print(wave_t,stagex[s_c]+16,stagey[s_c],7)
+	if wave_t>30 and wave_t<40 then	
+		rectfill2(stagex[s_c]+23,stagey[s_c]+60,82,10,6)
+		rectfill2(stagex[s_c]+24,stagey[s_c]+61,80,8,0)
+		print("the bugs are coming!",stagex[s_c]+25,stagey[s_c]+62,co)
+	end
+end
 __gfx__
 00000000770000778800008800000000000000008000000000000000000000000088880080000000000000000000000000000000000000000000000000000000
 00000000700000078000000800b000b0b000b0000800000000000000000000000800008000000000000570000005500000055000000550000500005000000000
