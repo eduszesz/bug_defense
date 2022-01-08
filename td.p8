@@ -5,7 +5,6 @@ __lua__
 --by eduszesz
 --game off game jam 2021
 
-
 function _init()
 	initialize()
 	title_screen()
