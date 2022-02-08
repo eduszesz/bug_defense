@@ -1,5 +1,5 @@
 pico-8 cartridge // http://www.pico-8.com
-version 34
+version 35
 __lua__
 --bug defense
 --by eduszesz
@@ -210,10 +210,6 @@ function draw_game()
 		spr(te.sp,te.x,te.y)
 	end
 	
-	for f in all(float) do
-		print(f.txt,f.x,f.y,f.c)
-	end
-	
 	show_cost()
 	wave_alert()
 	
@@ -225,10 +221,8 @@ function draw_game()
 		spr(49,stagex[s_c]+(8*j),stagey[s_c]+8)
 	end
 	
-	if win then
-		rectfill2(stagex[s_c]+23,stagey[s_c]+60,82,10,6)
-		rectfill2(stagex[s_c]+24,stagey[s_c]+61,80,8,0)
-		print("level cleared",stagex[s_c]+25,stagey[s_c]+62,7)
+	for f in all(float) do
+		print(f.txt,f.x,f.y,f.c)
 	end
 	
 end
@@ -748,8 +742,11 @@ end
 function fix_bugs()
 	for te in all(terminals) do	
 		if t%te.s==0 then
+			local dx=14
+			if te.x<stagex[s_c]+14 then dx=8 end
+			if te.x>stagex[s_c]+110 then dx=20 end
 			b_fix+=10
-			addfloat("bug fixed",te.x-14,te.y,11)
+			addfloat("bug fixed",te.x-dx,te.y,11)
 		end
 	end	
 end
