@@ -13,15 +13,18 @@ end
 
 function update_game()
 	t+=1
+	
 	set_processor()
 	set_terminals()
 	set_waves()
 	set_enemies()
-		
+	
+	-- cursor movement	--------
 	if btnp(0) then c.x-=8 end
 	if btnp(1) then c.x+=8	end
 	if btnp(2) then c.y-=8	end
 	if btnp(3) then c.y+=8	end
+	---------------------------
 	
 	if c.x<stagex[s_c] then
 	 c.x=stagex[s_c]
